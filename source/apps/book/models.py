@@ -36,8 +36,13 @@ class Book(BaseModel):
     def __str__(self):
         return self.title
 
+    @property
+    def book_mark_count(self):
+        # cach with redis #TODO
+        return self.bookmarks.count()
 
-class RateAndComment(BaseModel):
+
+class RatingComment(BaseModel):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -63,8 +68,8 @@ class RateAndComment(BaseModel):
     class Meta:
         unique_together = ('user', 'book')
         ordering = ['-created_at']
-        verbose_name = _('RateAndComment')
-        verbose_name_plural = _('RatesAndComments')
+        verbose_name = _('RatingComment')
+        verbose_name_plural = _('RatingComments')
 
     def __str__(self):
         return f"{self.user.username} - {self.book.title}"
@@ -80,6 +85,7 @@ class BookMark(BaseModel):
         Book,
         on_delete=models.CASCADE,
         verbose_name=_('Book'),
+        related_name='bookmarks'
     )
 
     class Meta:
