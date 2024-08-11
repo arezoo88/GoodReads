@@ -49,7 +49,10 @@ class Book(BaseModel):
 
     @property
     def rating_count(self):
-        return self.ratings.count()
+        return self.ratings.exclude(rating__isnull=True).count()
+
+    def comment_count(self):
+        return obj.ratings.exclude(comment__isnull=True).count()
 
 
 class RatingComment(BaseModel):
