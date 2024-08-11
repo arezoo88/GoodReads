@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from django.db.models import Avg
 
 User = get_user_model()
 
@@ -37,9 +38,18 @@ class Book(BaseModel):
         return self.title
 
     @property
-    def book_mark_count(self):
+    def bookmark_count(self):
         # cach with redis #TODO
         return self.bookmarks.count()
+
+    @property
+    def average_rating(self):
+        ratings = self.ratings.all()
+        return ratings.aggregate(Avg('rating'))['rating__avg'] if ratings else None
+
+    @property
+    def rating_count(self):
+        return self.ratings.count()
 
 
 class RatingComment(BaseModel):
@@ -51,6 +61,7 @@ class RatingComment(BaseModel):
     book = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
+        related_name='ratings',
         verbose_name=_('Book'),
     )
     rating = models.IntegerField(
