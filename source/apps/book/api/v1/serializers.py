@@ -37,7 +37,7 @@ class BookDetailSerializer(serializers.ModelSerializer):
         return RatingCommentSerializer(ratings, many=True).data
 
 
-class BookSerializer(serializers.ModelSerializer):
+class BookListSerializer(serializers.ModelSerializer):
     is_bookmarked = serializers.SerializerMethodField()
 
     class Meta:
