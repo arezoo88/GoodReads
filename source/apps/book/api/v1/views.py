@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from apps.book.api.v1.serializers import BookListSerializer,BookDetailSerializer, RatingCommentSerializer, BookMarkSerializer
+from apps.book.api.v1.serializers import BookListSerializer, BookDetailSerializer, RatingCommentSerializer, BookMarkSerializer
 from apps.book.models import Book, RatingComment, BookMark
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
@@ -35,7 +35,13 @@ class BookMarkViewSet(ModelViewSet):
     serializer_class = BookMarkSerializer
 
     def create(self, request, *args, **kwargs):
-        if not RatingComment.objects.filter(user=request.user).exists():
-            response = super().create(request, *args, **kwargs)
-            return Response({'status': 'success'}, status=status.HTTP_200_OK)
-        return Response({'error': 'You already commented or rated for this book.'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        if not BookMark.objects.filter(user=request.user, book__pk=request.data.get('book')).exists():
+            if not RatingComment.objects.filter(user=request.user, book__pk=request.data.get('book')).exists():
+                serializer.save(user=request.user)
+                self.perform_create(serializer)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({'error': 'You already commented or rated for this book.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'You already bookmarked this book.'}, status=status.HTTP_400_BAD_REQUEST)
