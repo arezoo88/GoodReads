@@ -1,0 +1,16 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: DockerFile
+    command: bash -c "cd source/ && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/home/app
+    networks:
+      - goodreads_app
+    ports:
+      - "8000:8000"
+    env_file:
+      - source/.env
+networks:
+  goodreads_app:
