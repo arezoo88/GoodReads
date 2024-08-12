@@ -9,6 +9,8 @@ The goal of the project is to design and implement the APIs of a website where u
 - [Installation](#installation)
 - [Running the Project](#running-the-project)
 - [API Documentation](#api-documentation)
+- [Postman Collection](#postman-collection)
+
 
 ## Features
 
@@ -45,12 +47,14 @@ The goal of the project is to design and implement the APIs of a website where u
    ```sh
    docker-compose up --build
    ```
-
-4. **Create superuser:**
+4. **Load data for testing project:**
 
    ```sh
    docker-compose exec web bash -c "cd /home/app/source && python manage.py initdata && python manage.py loaddata apps/book/fixtures/books.json && python manage.py loaddata apps/book/fixtures/ratingcomments.json"
+   ```
+5. **Create superuser:**
 
+   ```sh
    docker-compose exec web bash -c "cd /home/app/source && python manage.py createsuperuser"
    ```
 
