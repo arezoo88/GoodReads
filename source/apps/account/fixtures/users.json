@@ -1,0 +1,42 @@
+[
+  {
+    "model": "account.user",
+    "pk": 1,
+    "fields": {
+      "email": "user1@gmail.com",
+      "password": "1234567890"
+    }
+  },
+  {
+    "model": "account.user",
+    "pk": 2,
+    "fields": {
+      "email": "user2@gmail.com",
+      "password": "1234567890"
+    }
+  },
+  {
+    "model": "account.user",
+    "pk": 3,
+    "fields": {
+      "email": "user3@gmail.com",
+      "password": "1234567890"
+    }
+  },
+  {
+    "model": "account.user",
+    "pk": 4,
+    "fields": {
+      "email": "user4@gmail.com",
+      "password": "1234567890"
+    }
+  },
+  {
+    "model": "account.user",
+    "pk": 5,
+    "fields": {
+      "email": "user5@gmail.com",
+      "password": "1234567890"
+    }
+  }
+]
