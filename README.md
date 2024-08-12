@@ -10,6 +10,8 @@ The goal of the project is to design and implement the APIs of a website where u
 - [Running the Project](#running-the-project)
 - [API Documentation](#api-documentation)
 - [Postman Collection](#postman-collection)
+- [Admin Panel SCREEN](#admin-panel-screen)
+
 
 
 ## Features
@@ -78,3 +80,6 @@ Access the Swagger UI at `http://127.0.0.1:8000/swagger/` for interactive API do
 ## Postman Collection
 
 <a href="https://github.com/arezoo88/GoodReads/blob/master/source/assets/Goodreads App.postman_collection.json" download>Click to Download Postman Collection</a>
+
+## Admin Panel SCREEN
+![Admin Panel SCREEN](https://github.com/arezoo88/GoodReads/blob/master/source/assets/admin_panel_screen.png)
