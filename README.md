@@ -77,6 +77,8 @@ The goal of the project is to design and implement the APIs of a website where u
 
 Access the Swagger UI at `http://127.0.0.1:8000/swagger/` for interactive API documentation.
 
+help : You can run login api in swagger then copy access token and paste in Authorize part . (now you are authorized!)
+
 ## Postman Collection
 
 <a href="https://github.com/arezoo88/GoodReads/blob/master/source/assets/Goodreads App.postman_collection.json" download>Click to Download Postman Collection</a>
