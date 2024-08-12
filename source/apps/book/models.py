@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-from django.db.models import Avg
+from django.db.models import Avg, Q
 
 User = get_user_model()
 
@@ -52,7 +52,7 @@ class Book(BaseModel):
         return self.ratings.exclude(rating__isnull=True).count()
 
     def comment_count(self):
-        return obj.ratings.exclude(comment__isnull=True).count()
+        return self.ratings.exclude(Q(comment__isnull=True) | Q(comment="")).count()
 
 
 class RatingComment(BaseModel):
@@ -70,11 +70,10 @@ class RatingComment(BaseModel):
     rating = models.IntegerField(
         choices=[(i, i) for i in range(1, 6)],
         verbose_name=_('Rating'),
-        null=True,
-        blank=True
+        null=True
     )
     comment = models.TextField(
-        verbose_name=_('Summary'),
+        verbose_name=_('Comment'),
         blank=True,
         null=True
     )
