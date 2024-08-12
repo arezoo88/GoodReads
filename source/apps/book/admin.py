@@ -3,7 +3,7 @@ from apps.book.models import Book, BookMark, RatingComment
 
 
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'summary', 'created_at', 'bookmark_count')
+    list_display = ('title', 'summary', 'created_at', 'bookmark_count','comment_count')
     list_filter = ('title',)
 
 
