@@ -44,8 +44,7 @@ class Book(BaseModel):
 
     @property
     def average_rating(self):
-        ratings = self.ratings.all()
-        return ratings.aggregate(Avg('rating'))['rating__avg'] if ratings else None
+        return self.ratings.aggregate(Avg('rating'))['rating__avg'] if self.ratings else None
 
     @property
     def rating_count(self):
