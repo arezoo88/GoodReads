@@ -2,7 +2,8 @@ from rest_framework import serializers
 from apps.book.models import Book, RatingComment, BookMark
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from django.db.models import Count,Avg
+from django.db.models import Count, Avg
+from django.db import connection
 
 
 class BookDetailSerializer(serializers.ModelSerializer):
@@ -22,15 +23,26 @@ class BookDetailSerializer(serializers.ModelSerializer):
             'comments'
         ]
 
-
-
     def get_rating_distribution(self, obj):
-        rating_dist = obj.ratings.values(
-            'rating').annotate(count=Count('rating'))
-        distribution = {i: 0 for i in range(1, 6)}
-        for entry in rating_dist:
-            distribution[entry['rating']] = entry['count']
-        return distribution
+        ### raw query
+        params = []
+        query = "SELECT rating,Count(rating) as count FROM book_ratingcomment"
+        query += " WHERE book_id = %s  GROUP BY rating"
+        params.append(obj.id)
+
+        with connection.cursor() as cursor:
+            cursor.execute(query, params)
+            distribution = {i: 0 for i in range(1, 6)}
+            for entry in cursor.fetchall():
+                distribution[entry[0]] = entry[1]
+            return distribution
+
+        # # rating_dist = obj.ratings.values(
+        # #     'rating').annotate(count=Count('rating'))
+        #     distribution = {i: 0 for i in range(1, 6)}
+        #     for entry in rating_dist:
+        #         distribution[entry['rating']] = entry['count']
+            # return distribution
 
     def get_comments(self, obj):
         ratings = obj.ratings.all()
