@@ -25,6 +25,7 @@ class BookDetailSerializer(serializers.ModelSerializer):
 
     def get_rating_distribution(self, obj):
         ### raw query
+        ###با توجه به اینکه به ابجکت دسترسی داشتم از طریق ای دی مربوطه داخل مدل ریتینگ کامنت کوئری زدم و فیلد ریتنگ و تعداد ریتینگ مربوط بهش رو پیدا کردم و از طریق گروپ بای فقط این دو فیلد رو برگردوندم .
         params = []
         query = "SELECT rating,Count(rating) as count FROM book_ratingcomment"
         query += " WHERE book_id = %s  GROUP BY rating"
